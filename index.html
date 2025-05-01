@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canteen Companion - College Canteen</title>
+
+    <!-- Tailwind CSS via CDN (Keep this here) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts (Keep this here) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Link to your custom CSS file -->
+    <link rel="stylesheet" href="style.css" />
+
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-green-600 text-white py-4 shadow-md sticky top-0 z-50 rounded-b-md">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <div class="logo text-2xl font-bold">🍽️ Canteen Companion</div>
+            <nav>
+                <ul class="flex space-x-4 md:space-x-6">
+                    <li><a href="#home" class="hover:text-green-200 no-underline text-sm md:text-base">Home</a></li>
+                    <li><a href="#menu" class="hover:text-green-200 no-underline text-sm md:text-base">Menu</a></li>
+                    <li><a href="#order" class="hover:text-green-200 no-underline text-sm md:text-base">Pre-Order</a></li>
+                    <li><a href="#feedback" class="hover:text-green-200 no-underline text-sm md:text-base">Feedback</a></li>
+                    <li><a href="#status" class="hover:text-green-200 no-underline text-sm md:text-base">Status</a></li>
+                    <li><a href="#login" class="hover:text-green-200 no-underline text-sm md:text-base">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 space-y-16">
+
+        <!-- Home Section -->
+        <section id="home" class="bg-gradient-to-r from-green-100 to-blue-100 text-gray-800 text-center py-20 px-4 rounded-lg shadow-lg">
+            <h1 class="text-4xl font-bold mb-4 text-green-700">Welcome to Canteen Companion</h1>
+            <p class="text-lg mb-8 max-w-2xl mx-auto">Your smart solution for pre-ordering meals, avoiding queues, giving feedback, and enjoying a variety of delicious options!</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#menu" class="bg-green-600 text-white py-3 px-6 rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300">
+                    View Today's Menu
+                </a>
+                 <a href="#order" class="bg-blue-500 text-white py-3 px-6 rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-75 transition duration-300">
+                    Pre-Order Now
+                </a>
+            </div>
+        </section>
+
+        <!-- Dynamic Menu Section -->
+        <section id="menu" class="py-16 rounded-lg bg-white shadow-md">
+            <h2 class="text-3xl font-bold mb-10 text-center text-green-700">Our Delicious Menu</h2>
+
+            <!-- Filters -->
+            <div class="flex justify-center space-x-2 sm:space-x-4 mb-8 px-4 flex-wrap gap-y-2">
+                <button onclick="renderMenu('all')" class="filter-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-full hover:bg-green-500 hover:text-white transition duration-300 text-sm sm:text-base">All</button>
+                <button onclick="renderMenu('veg')" class="filter-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-full hover:bg-green-500 hover:text-white transition duration-300 text-sm sm:text-base">Veg 🥦</button>
+                <button onclick="renderMenu('non-veg')" class="filter-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-full hover:bg-green-500 hover:text-white transition duration-300 text-sm sm:text-base">Non-Veg 🍗</button>
+                <button onclick="renderMenu('snack')" class="filter-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-full hover:bg-green-500 hover:text-white transition duration-300 text-sm sm:text-base">Snacks 🥨</button>
+                <button onclick="renderMenu('drink')" class="filter-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-full hover:bg-green-500 hover:text-white transition duration-300 text-sm sm:text-base">Drinks 🥤</button>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div id="menu-items" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
+                <p class="text-center col-span-full">Loading menu...</p>
+            </div>
+
+             <!-- AI Recommender Placeholder -->
+             <div id="recommendation" class="mt-12 p-6 bg-blue-50 rounded-lg max-w-2xl mx-auto text-center shadow">
+                 <h3 class="text-xl font-semibold mb-3 text-blue-700">✨ Chef's Recommendation!</h3>
+                 <p id="recommendation-text" class="text-gray-700">Based on popular choices, you might like...</p>
+             </div>
+        </section>
+
+        <!-- Pre-Order Section -->
+        <section id="order" class="py-16 rounded-lg bg-green-50 shadow-md">
+            <h2 class="text-3xl font-bold mb-10 text-center text-green-700">Pre-Order Your Meal</h2>
+            <p class="text-center mb-8 text-gray-600 max-w-xl mx-auto">Select your meal, quantity, and preferred pickup time slot to skip the queue!</p>
+            <div id="order-form" class="max-w-lg mx-auto flex flex-col gap-5 bg-white p-8 rounded-lg shadow-inner">
+                <input type="text" id="order-name" placeholder="Your Name / ID" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" />
+
+                <select id="order-food" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 bg-white">
+                    <option value="">-- Select Food Item --</option>
+                </select>
+
+                <input type="number" id="order-quantity" placeholder="Quantity (e.g., 1)" min="1" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500" />
+
+                <select id="order-timeslot" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 bg-white">
+                    <option value="">-- Select Pickup Time Slot --</option>
+                </select>
+
+                <select id="order-payment" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 bg-white">
+                    <option value="pay-at-counter">Pay at Counter</option>
+                    <option value="upi" disabled>UPI (Coming Soon)</option>
+                    <option value="wallet" disabled>College Wallet (Coming Soon)</option>
+                </select>
+
+                <div id="allergy-alert" class="text-sm text-red-600 hidden mt-1"></div>
+
+                <button onclick="submitOrder()" class="form-button w-full bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 font-semibold">
+                    Place Pre-Order
+                </button>
+                <div id="order-message" class="mt-4 text-center font-semibold"></div>
+            </div>
+        </section>
+
+        <!-- Feedback Section -->
+        <section id="feedback" class="py-16 rounded-lg bg-blue-50 shadow-md">
+            <h2 class="text-3xl font-bold mb-10 text-center text-blue-700">Share Your Feedback</h2>
+            <p class="text-center mb-8 text-gray-600 max-w-xl mx-auto">Help us improve! Rate your recent meal and share your thoughts.</p>
+            <div id="feedback-form" class="max-w-lg mx-auto flex flex-col gap-5 bg-white p-8 rounded-lg shadow-inner">
+                <select id="feedback-food" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white">
+                    <option value="">-- Select Food Item You Had --</option>
+                </select>
+
+                <div class="text-center">
+                    <label class="block mb-2 text-gray-700 font-medium">Rate Your Experience:</label>
+                    <div id="star-rating" class="star-rating inline-block" data-rating="0">
+                        <span data-value="1">★</span>
+                        <span data-value="2">★</span>
+                        <span data-value="3">★</span>
+                        <span data-value="4">★</span>
+                        <span data-value="5">★</span>
+                    </div>
+                    <input type="hidden" id="feedback-rating" value="0">
+                </div>
+
+                 <textarea id="feedback-comment" placeholder="Your comments (optional)..." rows="4" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+
+                 <div>
+                     <label for="feedback-photo" class="block mb-1 text-sm text-gray-600">Upload Photo (Optional):</label>
+                    <input type="file" id="feedback-photo" accept="image/*" class="form-input w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"/>
+                 </div>
+
+                <button onclick="submitFeedback()" class="form-button w-full bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-75 font-semibold">
+                    Submit Feedback
+                </button>
+                <div id="feedback-message" class="mt-4 text-center font-semibold"></div>
+            </div>
+        </section>
+
+        <!-- Canteen Status & Analytics Section -->
+        <section id="status" class="py-16 rounded-lg bg-yellow-50 shadow-md">
+            <h2 class="text-3xl font-bold mb-10 text-center text-yellow-700">Canteen Status & Insights</h2>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <div class="bg-white p-6 rounded-lg shadow-inner text-center">
+                     <h3 class="text-xl font-semibold mb-4 text-yellow-800">Current Queue Status</h3>
+                     <div id="queue-heatmap" class="p-4 rounded-md text-lg font-bold transition-colors duration-500">
+                         Loading status...
+                     </div>
+                     <p class="text-sm text-gray-500 mt-2">Updates periodically. Green = Low, Yellow = Moderate, Red = Crowded.</p>
+                </div>
+
+                 <div class="bg-white p-6 rounded-lg shadow-inner text-center">
+                     <h3 class="text-xl font-semibold mb-4 text-green-800">🌱 Our Green Impact</h3>
+                     <p class="text-gray-700">Estimated Food Saved This Week: <strong id="food-saved" class="text-green-600">-- kg</strong></p>
+                     <p class="text-gray-700 mt-1">Top Sustainable Student: <strong id="top-student" class="text-green-600">--</strong></p>
+                     <p class="text-sm text-gray-500 mt-2">Based on reduced waste and pre-orders.</p>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="py-16 rounded-lg bg-gray-200 shadow-md">
+            <h2 class="text-3xl font-bold mb-10 text-center text-gray-800">Admin / Staff Login</h2>
+            <div id="login-form" class="max-w-sm mx-auto flex flex-col gap-4 bg-white p-8 rounded-lg shadow-inner">
+                <input type="text" id="login-username" placeholder="Username" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500" />
+                <input type="password" id="login-password" placeholder="Password" class="form-input w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gray-500 focus:border-gray-500" />
+                <button onclick="login()" class="form-button w-full bg-gray-700 text-white py-3 px-6 rounded-md hover:bg-gray-800 transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 font-semibold">Login</button>
+                <div id="login-message" class="mt-4 text-center font-semibold text-red-600"></div>
+            </div>
+        </section>
+
+        <!-- Contact Section (Optional) -->
+        <section id="contact" class="bg-gray-100 py-16 text-center">
+            <h2 class="text-2xl font-bold mb-6 text-gray-700">Contact Us</h2>
+            <p class="text-lg text-gray-600 mb-2">Email: canteen@college.edu</p>
+            <p class="text-lg text-gray-600">Phone: +123 456 7890</p>
+            <p class="text-sm text-gray-500 mt-4">Location: Ground Floor, Student Centre</p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 text-center rounded-t-md mt-16">
+        <p>© 2024 Canteen Companion - College Canteen. All rights reserved.</p>
+        <p class="text-xs text-gray-400 mt-1">Developing a smarter canteen experience.</p>
+    </footer>
+
+    <!-- Link to your JavaScript file (defer ensures it runs after HTML parsing) -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>
